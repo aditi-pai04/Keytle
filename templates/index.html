@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workspace Key Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Workspace Key Tracker</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Assigned To</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key in keys %}
+            <tr>
+                <td>{{ key.key }}</td>
+                <td>{{ key.name }}</td>
+                <td>{{ key.contact }}</td>
+                <td>
+                    <form action="/update" method="post" style="display: inline;" onsubmit="return updateKey(event, {{ loop.index0 }})">
+                        <input type="text" name="name" placeholder="Name" value="{{ key.name }}" required>
+                        <input type="text" name="contact" placeholder="Contact" value="{{ key.contact }}" required>
+                        <input type="hidden" name="key_id" value="{{ loop.index0 }}">
+                        <button type="submit">Update</button>
+                    </form>
+                    <form action="/clear/{{ loop.index0 }}" method="post" style="display: inline;" onsubmit="return clearKey(event)">
+                        <button type="submit" style="background-color: red; color: white;">Clear</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        async function updateKey(event, keyId) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+
+            const response = await fetch('/update', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert(result.message);
+                location.reload();
+            }
+        }
+
+        async function clearKey(event) {
+            event.preventDefault();
+            const form = event.target;
+
+            const response = await fetch(form.action, {
+                method: 'POST'
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert(result.message);
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
