@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Change History</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Action</th>
+                <th>Key ID</th>
+                <th>Old Data</th>
+                <th>New Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.timestamp }}</td>
+                <td>{{ log.action }}</td>
+                <td>{{ log.key_id }}</td>
+                <td>
+                    Key: {{ log.old_data.key }}<br>
+                    Name: {{ log.old_data.name }}<br>
+                    Contact: {{ log.old_data.contact }}
+                </td>
+                <td>
+                    Key: {{ log.new_data.key }}<br>
+                    Name: {{ log.new_data.name }}<br>
+                    Contact: {{ log.new_data.contact }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
