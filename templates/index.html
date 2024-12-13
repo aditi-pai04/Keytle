@@ -56,7 +56,8 @@
             {% endfor %}
         </tbody>
     </table>
-    <button href="/history" style="background-color: red; color: white;">History</button>
+    <button onclick="window.location.href='/history'" style="background-color: red; color: white;">History</button>
+
     <script>
         async function updateKey(event, keyId) {
             event.preventDefault();
