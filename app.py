@@ -12,6 +12,7 @@ HISTORY_PATH = "/tmp/keys_history.json"
 # Default keys to initialize if the file does not exist
 DEFAULT_KEYS = [
     {"key": "A123", "name": "John Doe", "contact": "1234567890"},
+    {"key": "B456", "name": "Jane Smith", "contact": "9876543210"},
     {"key": "B456", "name": "Jane Smith", "contact": "9876543210"}
 ]
 
