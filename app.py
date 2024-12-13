@@ -9,8 +9,11 @@ KEYS_FILE = os.path.join(os.path.dirname(__file__), "keys.json")
 
 # Load keys from the JSON file
 def load_keys():
-    with open(KEYS_FILE, 'r') as file:
-        return json.load(file)
+    keys_json = os.getenv("KEYS_JSON")
+    if keys_json:
+        return json.loads(keys_json)
+    return []
+
 
 # Save keys to the JSON file
 def save_keys(keys):
